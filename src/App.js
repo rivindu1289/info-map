@@ -40,6 +40,21 @@ class App extends Component {
       });
     polygonTemplate.tooltipText = "{name}\nPopulation: {pop}";
 
+    // set up markers for cities
+    let imageSeries = map.series.push(new am4maps.MapImageSeries());       
+    let imageSeriesTemplate = imageSeries.mapImages.template;
+
+    let circle = imageSeriesTemplate.createChild(am4core.Circle);
+    circle.radius = 4;
+    circle.fill = am4core.color("#B27799");
+    circle.stroke = am4core.color("#FFFFFF");
+    circle.strokeWidth = 2;
+    circle.nonScaling = true;
+    circle.tooltipText = "{name}\nTime: {time}\nDate: {date}";
+
+    imageSeriesTemplate.propertyFields.latitude = "latitude";
+    imageSeriesTemplate.propertyFields.longitude = "longitude";
+
     this.chart = map;
   }
 
