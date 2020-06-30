@@ -71,14 +71,8 @@ class App extends Component {
       .then(response => response.json())
       .then(jsonData => {
         for (var x of jsonData){
-          this.dCap[this.dCap.length] = {name: x.CapitalName, latitude: Number(x.CapitalLatitude), longitude: Number(x.CapitalLongitude), time: "t", date: "d"};
-        }
-        imageSeries.data = this.dCap;
-      }).then(()=> {
-        for (var x of this.dCap){
-          let lat = Number(x.latitude);
-          let lon = Number(x.longitude);
-
+          let lat = Number(x.CapitalLatitude);
+          let lon = Number(x.CapitalLongitude);
           let timeZone = tzlookup(lat,lon);
           let d = new Date();
           let timeDate = moment.utc(d).tz(timeZone);
@@ -88,12 +82,10 @@ class App extends Component {
           let date =  timeDate.toLocaleString().slice(0,15);
           let time = timeDate.toLocaleString().slice(16,21);
 
-          x.time = time;
-          x.date = date;
+          this.dCap[this.dCap.length] = {name: x.CapitalName, latitude: lat, longitude: lon, time: time, date: date};
         }
+        imageSeries.data = this.dCap;
       });
-
-      this.props.
 
     this.chart = map;
   }
