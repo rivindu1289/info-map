@@ -66,16 +66,16 @@ class App extends Component {
     imageSeriesTemplate.propertyFields.longitude = "longitude";
 
     // add capitals, plus date and time
-    var dCap = [];
+    this.dCap = [];
     fetch("https://raw.githubusercontent.com/rivindu1289/capital-cities/master/country-capitals.json")
       .then(response => response.json())
       .then(jsonData => {
         for (var x of jsonData){
-          dCap[dCap.length] = {name: x.CapitalName, latitude: Number(x.CapitalLatitude), longitude: Number(x.CapitalLongitude), time: "t", date: "d"};
+          this.dCap[this.dCap.length] = {name: x.CapitalName, latitude: Number(x.CapitalLatitude), longitude: Number(x.CapitalLongitude), time: "t", date: "d"};
         }
-        imageSeries.data = dCap;
+        imageSeries.data = this.dCap;
       }).then(()=> {
-        for (var x of dCap){
+        for (var x of this.dCap){
           let lat = Number(x.latitude);
           let lon = Number(x.longitude);
 
@@ -92,6 +92,8 @@ class App extends Component {
           x.date = date;
         }
       });
+
+      this.props.
 
     this.chart = map;
   }
