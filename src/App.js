@@ -8,6 +8,12 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 
+
+import moment from 'moment-timezone';
+//var moment = require('moment-timezone');
+import tzlookup from 'tz-lookup';
+//var tzlookup = require("tz-lookup");
+
 am4core.useTheme(am4themes_animated);
 
 class App extends Component {
@@ -54,6 +60,34 @@ class App extends Component {
 
     imageSeriesTemplate.propertyFields.latitude = "latitude";
     imageSeriesTemplate.propertyFields.longitude = "longitude";
+
+    // add capitals, plus date and time
+    var dCap = [];
+    fetch("https://raw.githubusercontent.com/rivindu1289/capital-cities/master/country-capitals.json")
+      .then(response => response.json())
+      .then(jsonData => {
+        for (var x of jsonData){
+          dCap[dCap.length] = {name: x.CapitalName, latitude: Number(x.CapitalLatitude), longitude: Number(x.CapitalLongitude), time: "t", date: "d"};
+        }
+        imageSeries.data = dCap;
+      }).then(()=> {
+        for (var x of dCap){
+          let lat = Number(x.latitude);
+          let lon = Number(x.longitude);
+
+          let timeZone = tzlookup(lat,lon);
+          let d = new Date();
+          let timeDate = moment.utc(d).tz(timeZone);
+
+          document.getElementById("data").innerHTML = timeDate;
+
+          let date =  timeDate.toLocaleString().slice(0,15);
+          let time = timeDate.toLocaleString().slice(16,21);
+
+          x.time = time;
+          x.date = date;
+        }
+      });
 
     this.chart = map;
   }
