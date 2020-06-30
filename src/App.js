@@ -34,6 +34,9 @@ class App extends Component {
     let hs = polygonTemplate.states.create("hover");
     hs.properties.fill = am4core.color("#367B25");
 
+    // hide antarctica
+    polygonSeries.exclude = ["AQ"];
+
     var d = [];
 
     // add population data for country to tooltip on hover
