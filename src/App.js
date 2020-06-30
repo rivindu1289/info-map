@@ -12,7 +12,7 @@ am4core.useTheme(am4themes_animated);
 
 class App extends Component {
   componentDidMount() {
-    let map = am4core.create("chartdiv", am4charts.XYChart);
+    let map = am4core.create("chartdiv", am4maps.MapChart);
     map.geodata = am4geodata_worldLow;
 
     map.projection = new am4maps.projections.Miller();
