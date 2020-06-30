@@ -27,6 +27,19 @@ class App extends Component {
     let hs = polygonTemplate.states.create("hover");
     hs.properties.fill = am4core.color("#367B25");
 
+    var d = [];
+
+    // add population data for country to tooltip on hover
+    fetch("https://gist.githubusercontent.com/gwillem/6ca8a81048e6f3721c3bafc803d44a72/raw/4fb66d18178c1a0fdf101fb6b03c4d21929472da/iso2_population.json")
+      .then(response => response.json())
+      .then(jsonData => {
+        for (var x of polygonSeries.data){
+          d[d.length] = {id:(x.id), name:(x.name), pop:Number(jsonData[x.id])};
+        }
+        polygonSeries.data = d;
+      });
+    polygonTemplate.tooltipText = "{name}\nPopulation: {pop}";
+
     this.chart = map;
   }
 
