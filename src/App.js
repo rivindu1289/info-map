@@ -108,7 +108,6 @@ class App extends Component {
 
   tick(){
     this.setState({date:new Date()});
-    
   }
 
   componentWillUnmount() {
