@@ -95,6 +95,7 @@ class App extends Component {
         imageSeries.data = this.dCap;
       });
 
+      
     this.chart = map;
   }
 
