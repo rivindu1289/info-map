@@ -28,7 +28,10 @@ class App extends Component {
     let map = am4core.create("chartdiv", am4maps.MapChart);
     map.geodata = am4geodata_worldHigh;
 
-    map.projection = new am4maps.projections.Miller();
+    map.projection = new am4maps.projections.Orthographic();
+    map.panBehavior = "rotateLongLat";
+    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#aadaff");
+    map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
     let polygonSeries = map.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.useGeodata = true;
 
