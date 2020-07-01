@@ -44,7 +44,7 @@ class App extends Component {
     hs.properties.fill = am4core.color("#367B25");
 
     // hide antarctica
-    polygonSeries.exclude = ["AQ"];
+    //polygonSeries.exclude = ["AQ"];
 
     var d = [];
 
@@ -122,7 +122,7 @@ class App extends Component {
 
   render() {
     return (
-      <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
+      <div id="chartdiv" style={{ width: "100%", height: "800px" }}></div>
     );
   }
 }
