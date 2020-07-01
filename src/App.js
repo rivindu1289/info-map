@@ -18,7 +18,13 @@ import tzlookup from 'tz-lookup';
 am4core.useTheme(am4themes_animated);
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {date: new Date()};
+  }
+
   componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
     let map = am4core.create("chartdiv", am4maps.MapChart);
     map.geodata = am4geodata_worldHigh;
 
@@ -74,15 +80,14 @@ class App extends Component {
           let lat = Number(x.CapitalLatitude);
           let lon = Number(x.CapitalLongitude);
           let timeZone = tzlookup(lat,lon);
-          let d = new Date();
-          let timeDate = moment.utc(d).tz(timeZone);
+          let timeDate = moment.utc(this.state.d).tz(timeZone);
 
           document.getElementById("data").innerHTML = timeDate;
 
-          let date =  timeDate.toLocaleString().slice(0,15);
-          let time = timeDate.toLocaleString().slice(16,21);
+          let dt =  timeDate.toLocaleString().slice(0,15);
+          let t = timeDate.toLocaleString().slice(16,21);
 
-          this.dCap[this.dCap.length] = {name: x.CapitalName, latitude: lat, longitude: lon, time: time, date: date};
+          this.dCap[this.dCap.length] = {name: x.CapitalName, latitude: lat, longitude: lon, time: t, date: dt, tz: timeZone};
         }
         imageSeries.data = this.dCap;
       });
@@ -90,10 +95,25 @@ class App extends Component {
     this.chart = map;
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot){
+
+  }
+
+  tick(){
+    this.setState({date:new Date()});
+    for (var x of this.dCap) {
+      let timeDate = moment.utc(this.state.d).tz(x.tz);
+      document.getElementById("data").innerHTML = timeDate;
+      x.date =  timeDate.toLocaleString().slice(0,15);
+      x.time = timeDate.toLocaleString().slice(16,21);
+    }
+  }
+
   componentWillUnmount() {
     if (this.chart) {
       this.chart.dispose();
     }
+    clearInterval(this.timerID);
   }
 
   render() {
