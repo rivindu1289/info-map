@@ -96,17 +96,19 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-
+    if (prevState.date.getMinutes() !== this.state.date.getMinutes()){
+      for (var x of this.dCap) {
+        let timeDate = moment.utc(this.state.d).tz(x.tz);
+        document.getElementById("data").innerHTML = timeDate;
+        x.date =  timeDate.toLocaleString().slice(0,15);
+        x.time = timeDate.toLocaleString().slice(16,21);
+      }
+    }
   }
 
   tick(){
     this.setState({date:new Date()});
-    for (var x of this.dCap) {
-      let timeDate = moment.utc(this.state.d).tz(x.tz);
-      document.getElementById("data").innerHTML = timeDate;
-      x.date =  timeDate.toLocaleString().slice(0,15);
-      x.time = timeDate.toLocaleString().slice(16,21);
-    }
+    
   }
 
   componentWillUnmount() {
