@@ -69,7 +69,7 @@ class App extends Component {
     circle.stroke = am4core.color("#FFFFFF");
     circle.strokeWidth = 2;
     circle.nonScaling = true;
-    circle.tooltipText = "{name}\nTime: {time}\nDate: {date}";
+    circle.tooltipText = "{name}\nTimezone: {tz}\nTime: {time}\nDate: {date}";
 
     imageSeriesTemplate.propertyFields.latitude = "latitude";
     imageSeriesTemplate.propertyFields.longitude = "longitude";
